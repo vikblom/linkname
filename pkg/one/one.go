@@ -16,7 +16,7 @@ func Some() int
 func Other() int
 
 // Here a bodyless function borrows an implementation from some other package.
-//go:linkname solo
+//go:linkname solo github.com/vikblom/linkname/pkg/one.Solo
 func solo() int {
 	return 9
 }
