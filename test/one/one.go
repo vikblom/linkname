@@ -1,24 +1,24 @@
 package one
 
-import _ "unsafe"
+import (
+	// Ensure that two is part of the build.
+	_ "github.com/vikblom/linkname/test/two"
 
-func One() string {
-	return "one"
+	_ "unsafe"
+)
+
+//go:linkname DeclHere github.com/vikblom/linkname/test/two.one
+func DeclHere() int
+
+// two.two linknames to this.
+func DeclThere() int
+
+//go:linkname DefHere github.com/vikblom/linkname/test/two.three
+func DefHere() int {
+	return 3
 }
 
-// Here a bodyless function borrows an implementation from some other package.
-//
-//go:linkname Some github.com/vikblom/linkname/test/two.some
-func Some() int
-
-// But the linkname can also be in the other package, referring back to here.
-// Requires a .s file in this package, so the compiler understands there could
-// be non-go (i.e. outside the package) things to link.
-func Other() int
-
-// Here a bodyless function borrows an implementation from some other package.
-//
-//go:linkname solo github.com/vikblom/linkname/test/one.Solo
-func solo() int {
-	return 9
+// two.four linknames to this.
+func DefThere() int {
+	return 4
 }
